@@ -230,8 +230,36 @@ body[class^="u-"] .top { background: color-mix(in srgb, var(--u-deep) 88%, trans
 }
 
 /* ── collections : même geste que les best-sellers, plus compact ── */
-.cols { display: grid; gap: 40px; padding-block: 20px 20px; }
+.cols { display: grid; gap: 0; padding-block: 10px 0; }
 .cols > .col { width: 100%; }                 /* une grille rétrécit un élément à marges auto : pleine largeur */
+/* chaque collection sur sa bande, accordée à son type, bords fondus dans la page */
+.col { position: relative; isolation: isolate; padding-block: 64px; }
+.col::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
+.col-type-and-graphics::before { background:
+  radial-gradient(circle at 10% 35%, rgba(226, 85, 52, 0.48) 0 150px, transparent 151px),
+  radial-gradient(circle at 93% 70%, rgba(240, 190, 40, 0.38) 0 200px, transparent 201px),
+  radial-gradient(circle at 93% 70%, #131316 0 120px, transparent 121px),
+  linear-gradient(90deg, transparent 64%, rgba(40, 90, 170, 0.38) 64% 70%, transparent 70%), #131316; }
+.col-dress-watches::before { background:
+  repeating-radial-gradient(circle at 78% 45%, rgba(232, 190, 106, 0.13) 0 1px, transparent 1px 9px),
+  radial-gradient(55% 80% at 78% 45%, rgba(232, 190, 106, 0.26), transparent 70%), linear-gradient(160deg, #0d1734, #070b18); }
+.col-run-ride-walk::before { background:
+  repeating-linear-gradient(-14deg, transparent 0 70px, rgba(255, 255, 255, 0.1) 70px 73px),
+  radial-gradient(50% 70% at 20% 60%, rgba(122, 181, 42, 0.35), transparent 70%),
+  radial-gradient(45% 70% at 85% 40%, rgba(192, 71, 63, 0.32), transparent 70%), #0d120b; }
+.col-pixel-worlds::before { background: linear-gradient(rgba(14, 12, 34, 0.6), rgba(14, 12, 34, 0.6)), url(../img/home/sg-meadow.png) center 35% / cover; image-rendering: pixelated; }
+.col-living-scenes::before { background:
+  radial-gradient(60% 70% at 25% 10%, rgba(80, 200, 220, 0.42), transparent 65%),
+  radial-gradient(50% 60% at 85% 90%, rgba(170, 110, 200, 0.32), transparent 65%), linear-gradient(180deg, #0a2a3c, #0b1c2b 60%, #191329); }
+.col-mission-control::before { background:
+  repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.45) 0 2px, transparent 2px 4px),
+  radial-gradient(55% 70% at 60% 50%, rgba(255, 176, 46, 0.32), transparent 68%), #130c04; }
+.col-retro-objects::before { background:
+  linear-gradient(168deg, transparent 0 52%, rgba(226, 120, 40, 0.35) 52% 57%, rgba(240, 180, 60, 0.32) 57% 62%, rgba(190, 70, 50, 0.32) 62% 67%, transparent 67%), #17120d; }
+.col-maps-and-paper::before { background:
+  repeating-radial-gradient(ellipse at 22% 62%, transparent 0 18px, rgba(214, 190, 140, 0.21) 18px 20px),
+  repeating-radial-gradient(ellipse at 82% 28%, transparent 0 22px, rgba(214, 190, 140, 0.16) 22px 24px), #15130e; }
 .col-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
 .col-head .sec { margin: 0; }
 .col-head p { margin: 0; color: var(--muted); }
@@ -246,10 +274,14 @@ body[class^="u-"] .top { background: color-mix(in srgb, var(--u-deep) 88%, trans
 .cp::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(transparent 55%, rgba(0,0,0,.65)); transition: opacity .3s; }
 .cp-name { position: absolute; left: calc(var(--s) + 10px); right: calc(2 * var(--s) + 6px); bottom: 16px; color: #fff; font: 800 19px/1.05 var(--u-font, var(--display)); overflow-wrap: anywhere;
            text-shadow: 0 2px 10px rgba(0,0,0,.7); transition: opacity .3s; }
-.cp-full { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: center;
+.cp-full { color: #fff; position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: center;
            padding: 26px calc(var(--s) + 34px) 26px calc(var(--s) + 26px); opacity: 0; pointer-events: none; transition: opacity .3s; }
 .cp-full > img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 18px; box-shadow: 0 22px 50px rgba(0,0,0,.4); }
-.cp-copy { display: grid; gap: 10px; max-width: 440px; }
+.cp-copy { display: grid; gap: 10px; max-width: 440px; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.cp-copy .btn { text-shadow: none; }
+.cp::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s;
+  background: linear-gradient(90deg, rgba(0,0,0,.05) 0 30%, rgba(0,0,0,.55) 62%); }
+.cp.open::before, .cp:focus-visible::before { opacity: 1; }
 .cp-title { font: 800 clamp(30px, 3.2vw, 46px)/1 var(--u-font, var(--display)); }
 .cp-tag { font-size: 18px; opacity: .9; }
 .cp-copy ul { margin: 2px 0 4px; padding-left: 20px; display: grid; gap: 4px; }
@@ -273,5 +305,7 @@ html:not(.js) .col-acc .cp:hover { flex-grow: 5; } html:not(.js) .cp:hover .cp-f
   .cp { --s: 0px; clip-path: none !important; margin: 0 !important; border-radius: 18px; scroll-snap-align: start; }
   .cp-cover, .cp-name, .cp::after { display: none; }
   .cp-full { position: relative; opacity: 1; grid-template-columns: minmax(0, 1fr); padding: 16px; pointer-events: auto; }
+  .cp::before { opacity: 1; background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.6) 55%); }
+  .col { padding-block: 40px; }
 }
 @media (prefers-reduced-motion: reduce) { .cp, .cp-cover { transition: none; } }
