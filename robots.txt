@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tiberej.github.io/sitemap.xml
